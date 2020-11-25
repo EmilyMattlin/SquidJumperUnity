@@ -13,28 +13,39 @@ public class SquidMovement : MonoBehaviour
     [SerializeField]
     public float right = 4.15f;
     public Rigidbody rb;
+    public GameObject floor;
 
-    void Start()
+    IEnumerator Start()
     {
+        yield return new WaitForSeconds(5f);
         //Invoke("DelayStart", 5f); //Trying to make 5 second delay
         AudioSource audioSource = GetComponent<AudioSource>();
         audioSource.Play();
         rb = gameObject.GetComponent<Rigidbody>();
-        squidStatus = PlayerStatus.Left;
+        squidStatus = PlayerStatus.Right;
     }
 
-    IEnumerator DelayStart()
+    protected void LateUpdate()
     {
-        yield return new WaitForSeconds(5f);
+        transform.localEulerAngles = new Vector3(0, 0, 0);
     }
 
     void Update()
     {
+        if(transform.position.x > 6f || transform.position.x < -6f)
+        {
+            floor.SetActive(false);
+        }
+        if (Time.time < 5f)
+        {
+            return;
+        }
         transform.position += new Vector3(0f, 0f, 0.1f);
         //Move left
         if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) && (squidStatus == PlayerStatus.Right))
         {
             rb.AddForce(-10f, 0, 0, ForceMode.Impulse);
+            squidStatus = PlayerStatus.Moving;
             //Vector3 destination = new Vector3(left, transform.position.y, transform.position.z + 1f);
             //StartCoroutine(Jump(1f, transform.position, destination, PlayerStatus.Left));
         }
@@ -43,6 +54,7 @@ public class SquidMovement : MonoBehaviour
         if ((Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) && (squidStatus == PlayerStatus.Left))
         {
             rb.AddForce(10f, 0, 0, ForceMode.Impulse);
+            squidStatus = PlayerStatus.Moving;
             //Vector3 destination = new Vector3(right, transform.position.y, transform.position.z + 1f);
             //StartCoroutine(Jump(1f, transform.position, destination, PlayerStatus.Right));
         }
@@ -52,8 +64,20 @@ public class SquidMovement : MonoBehaviour
     {
         rb.constraints = RigidbodyConstraints.FreezePositionY;
     }
+    
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Left Wall")
+        {
+            squidStatus = PlayerStatus.Left;
+        }
+        if (collision.gameObject.tag == "Right Wall")
+        {
+            squidStatus = PlayerStatus.Right;
+        }
+    }
 
-    IEnumerator Jump(float waitTime, Vector3 start, Vector3 dest, PlayerStatus afterStatus)
+        IEnumerator Jump(float waitTime, Vector3 start, Vector3 dest, PlayerStatus afterStatus)
     {
         squidStatus = PlayerStatus.Moving;
         float i = 0f;

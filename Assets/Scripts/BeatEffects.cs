@@ -8,6 +8,8 @@ public class BeatEffects : MonoBehaviour
 	private bool active;
 	public GameObject rightWall;
 	public GameObject leftWall;
+	private enum WallSide { Right, Left };
+	private WallSide side;
 	// Start is called before the first frame update
 	void Start()
     {
@@ -29,13 +31,22 @@ public class BeatEffects : MonoBehaviour
 	//to adjust the sensitivity
 	void onOnbeatDetected()
 	{
-
-		Vector3 newRWalllPos = new Vector3(rightWall.transform.position.x, rightWall.transform.position.y, transform.position.z);
-		GameObject newWall = Instantiate(rightWall, newRWalllPos, transform.rotation);
+		var values = WallSide.GetValues(typeof(WallSide));
+		side = (WallSide)Random.Range(0, System.Enum.GetValues(typeof(WallSide)).Length); 
+		GameObject newWall;
+		if (side == WallSide.Left)
+		{
+			Vector3 newLWalllPos = new Vector3(leftWall.transform.position.x, leftWall.transform.position.y, transform.position.z);
+			newWall = Instantiate(leftWall, newLWalllPos, transform.rotation);
+		}
+		else
+		{
+			Vector3 newRWalllPos = new Vector3(rightWall.transform.position.x, rightWall.transform.position.y, transform.position.z);
+			newWall = Instantiate(rightWall, newRWalllPos, transform.rotation);
+		}
 		newWall.AddComponent<WallBehavior>();
-		//gameObject.active = !active;
 		active = !active;
-		UnityEngine.Debug.Log("Beat!!!");
+		//UnityEngine.Debug.Log("Beat!!!");
 		//UnityEngine.Debug.Log(i);
 		i++;
 	}
@@ -55,57 +66,3 @@ public class BeatEffects : MonoBehaviour
 	}
 
 }
-/*
- * using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using UnityEngine;
-
-public class BeatEffects : MonoBehaviour
-{
-	private int i;
-
-
-	private bool active;
-	public GameObject rightWall;
-	public GameObject leftWall;
-	void Start()
-	{
-		active = true;
-		i = 1;
-		//Select the instance of AudioProcessor and pass a reference
-		//to this object
-		AudioProcessor processor = FindObjectOfType<AudioProcessor>();
-		processor.onBeat.AddListener(onOnbeatDetected);
-		processor.onSpectrum.AddListener(onSpectrum);
-	}
-
-	//this event will be called every time a beat is detected.
-	//Change the threshold parameter in the inspector
-	//to adjust the sensitivity
-	void onOnbeatDetected()
-	{
-		Vector3 
-		Instantiate(leftWall, GameObject.Find("Squid").transform.position, transform.rotation);
-		//gameObject.active = !active;
-		active = !active;
-		UnityEngine.Debug.Log("Beat!!!");
-		UnityEngine.Debug.Log(i);
-		i++;
-	}
-
-	//This event will be called every frame while music is playing
-	void onSpectrum(float[] spectrum)
-	{
-		//The spectrum is logarithmically averaged
-		//to 12 bands
-
-		for (int i = 0; i < spectrum.Length; ++i)
-		{
-			Vector3 start = new Vector3(i, 0, 0);
-			Vector3 end = new Vector3(i, spectrum[i], 0);
-			UnityEngine.Debug.DrawLine(start, end);
-		}
-	}
-}*/

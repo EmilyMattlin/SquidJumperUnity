@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WallBehavior : MonoBehaviour
 {
-    float lifeTime = 10.0f;
+    float lifeTime = 20.0f;
 
     void Awake() 
     {
