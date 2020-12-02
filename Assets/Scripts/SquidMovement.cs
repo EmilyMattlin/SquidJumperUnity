@@ -15,7 +15,8 @@ public class SquidMovement : MonoBehaviour
     public Rigidbody rb;
     public GameObject floor;
     private bool touchingWall;
-    public GameObject camera;
+    public Camera camera;
+
     IEnumerator Start()
     {
         yield return new WaitForSeconds(5f);
@@ -27,7 +28,7 @@ public class SquidMovement : MonoBehaviour
 
     protected void LateUpdate()
     {
-        transform.localEulerAngles = new Vector3(0, 0, 0);
+        transform.localEulerAngles = new Vector3(0, 90, 0);
     }
 
     void Update()
@@ -49,7 +50,11 @@ public class SquidMovement : MonoBehaviour
         //Move left
         if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) && (squidStatus == PlayerStatus.Right))
         {
-            rb.AddForce(-20f, 10f, 0, ForceMode.Impulse);
+            rb.AddForce(-20f, 0, 0, ForceMode.Impulse);
+            if (transform.position.y < 10)
+            {
+                transform.position += new Vector3(0f, 0.75f, 0f);
+            }
             squidStatus = PlayerStatus.Moving;
             //Vector3 destination = new Vector3(left, transform.position.y, transform.position.z + 1f);
             //StartCoroutine(Jump(1f, transform.position, destination, PlayerStatus.Left));
@@ -58,7 +63,11 @@ public class SquidMovement : MonoBehaviour
         //Move right
         if ((Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) && (squidStatus == PlayerStatus.Left))
         {
-            rb.AddForce(20f, 10f, 0, ForceMode.Impulse);
+            rb.AddForce(20f, 0, 0, ForceMode.Impulse);
+            if (transform.position.y < 10)
+            {
+                transform.position += new Vector3(0f, 0.75f, 0f);
+            }
             squidStatus = PlayerStatus.Moving;
             //Vector3 destination = new Vector3(right, transform.position.y, transform.position.z + 1f);
             //StartCoroutine(Jump(1f, transform.position, destination, PlayerStatus.Right));
