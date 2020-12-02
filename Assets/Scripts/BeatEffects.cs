@@ -8,6 +8,10 @@ public class BeatEffects : MonoBehaviour
 	private bool active;
 	public GameObject rightWall;
 	public GameObject leftWall;
+	public GameObject rightWallx2;
+	public GameObject leftWallx2;
+	public GameObject rightWallx3;
+	public GameObject leftWallx3;
 	private enum WallSide { Right, Left };
 	private WallSide side;
 	// Start is called before the first frame update
