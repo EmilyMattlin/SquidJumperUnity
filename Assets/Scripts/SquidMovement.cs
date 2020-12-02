@@ -49,7 +49,7 @@ public class SquidMovement : MonoBehaviour
         //Move left
         if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) && (squidStatus == PlayerStatus.Right))
         {
-            rb.AddForce(-20f, 1f, 0, ForceMode.Impulse);
+            rb.AddForce(-20f, 10f, 0, ForceMode.Impulse);
             squidStatus = PlayerStatus.Moving;
             //Vector3 destination = new Vector3(left, transform.position.y, transform.position.z + 1f);
             //StartCoroutine(Jump(1f, transform.position, destination, PlayerStatus.Left));
@@ -58,7 +58,7 @@ public class SquidMovement : MonoBehaviour
         //Move right
         if ((Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) && (squidStatus == PlayerStatus.Left))
         {
-            rb.AddForce(20f, 1f, 0, ForceMode.Impulse);
+            rb.AddForce(20f, 10f, 0, ForceMode.Impulse);
             squidStatus = PlayerStatus.Moving;
             //Vector3 destination = new Vector3(right, transform.position.y, transform.position.z + 1f);
             //StartCoroutine(Jump(1f, transform.position, destination, PlayerStatus.Right));

@@ -14,6 +14,7 @@ public class BeatEffects : MonoBehaviour
 	public GameObject leftWallx3;
 	private enum WallSide { Right, Left };
 	private WallSide side;
+	private bool leftSide;
 	// Start is called before the first frame update
 	void Start()
     {
@@ -35,10 +36,12 @@ public class BeatEffects : MonoBehaviour
 	//to adjust the sensitivity
 	void onOnbeatDetected()
 	{
-		var values = WallSide.GetValues(typeof(WallSide));
-		side = (WallSide)Random.Range(0, System.Enum.GetValues(typeof(WallSide)).Length); 
+		//var values = WallSide.GetValues(typeof(WallSide));
+
+		//side = (WallSide)Random.Range(0, System.Enum.GetValues(typeof(WallSide)).Length); 
+		leftSide = !leftSide;
 		GameObject newWall;
-		if (side == WallSide.Left)
+		if (leftSide)//(side == WallSide.Left)
 		{
 			Vector3 newLWalllPos = new Vector3(leftWall.transform.position.x, leftWall.transform.position.y, transform.position.z);
 			newWall = Instantiate(leftWall, newLWalllPos, transform.rotation);

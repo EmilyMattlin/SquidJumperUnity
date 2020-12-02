@@ -8,7 +8,8 @@ public class WallBehavior : MonoBehaviour
 
     void Awake() 
     {
-         Destroy(gameObject, lifeTime);
+//        gameObject.SetActive(true);
+        Destroy(gameObject, lifeTime);
     }
     // Start is called before the first frame update
     void Start()
