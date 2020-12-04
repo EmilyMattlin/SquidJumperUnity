@@ -22,11 +22,10 @@ public class BuildingSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        leftSide = !leftSide;
-        if ((Time.time % 1f) < .1f)
+        /*if ((Time.time % 1f) < .1f)
         {
             createBuilding();
-        }
+        }*/
     }
 
     public Vector3 createBuilding()
@@ -50,7 +49,8 @@ public class BuildingSpawner : MonoBehaviour
 
         halfWidthLast = halfWidth;
         locationLast = newWalllPos;
-        
+        leftSide = !leftSide;
+
         GameObject newWall = Instantiate(wall, newWalllPos, transform.rotation);
         newWall.SetActive(true);
         newWall.AddComponent<WallBehavior>();

@@ -20,7 +20,7 @@ public class CameraMovement : MonoBehaviour
         }
         if (!loss)
         {
-            transform.position += new Vector3(0f, 0f, 0.1f);
+            transform.position += new Vector3(0f, 0f, 0.15f);
         }
         else
         {

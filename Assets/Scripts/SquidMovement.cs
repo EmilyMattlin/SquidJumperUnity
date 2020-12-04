@@ -14,7 +14,9 @@ public class SquidMovement : MonoBehaviour
     public GameObject floor;
     private bool touchingWall;
     public Camera camera;
+    public GameObject marker;
     private bool loss;
+    private bool jumped;
 
     IEnumerator Start()
     {
@@ -24,6 +26,7 @@ public class SquidMovement : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody>();
         squidStatus = PlayerStatus.Right;
         touchingWall = true;
+        jumped = false;
     }
 
     protected void LateUpdate()
@@ -45,8 +48,13 @@ public class SquidMovement : MonoBehaviour
         {
             return;
         }
+        else if (transform.position.z > 22f && !jumped)
+        {
+            onLoss();
+        }
 
-        transform.position += new Vector3(0f, 0f, 0.1f);
+        transform.position += new Vector3(0f, 0f, 0.15f);
+
         //Move left
         if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) && (squidStatus == PlayerStatus.Right))
         {
@@ -60,9 +68,15 @@ public class SquidMovement : MonoBehaviour
 
         if (transform.position.x > RIGHT || transform.position.z < camera.transform.position.z || transform.position.x < LEFT || transform.position.y < 1f)
         {
-            loss = true;
-            camera.GetComponent<CameraMovement>().onLoss();
+            onLoss();
         }
+    }
+
+    void onLoss()
+    {
+        loss = true;
+        camera.GetComponent<CameraMovement>().onLoss();
+        marker.GetComponent<BeatEffects>().onLoss();
     }
 
     void OnCollisionEnter(Collision collision)
@@ -98,5 +112,6 @@ public class SquidMovement : MonoBehaviour
             rb.AddForce(0, 0.5f, 0, ForceMode.Impulse);
         }
         squidStatus = PlayerStatus.Moving;
+        jumped = true;
     }
 }

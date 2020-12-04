@@ -1091,7 +1091,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0.109375, y: 0, z: 0.03515625, w: 1.4355e-41}
+  m_BoundingSphereOverride: {x: 0.0000008142067, y: 6.323129e-19, z: 6337696, w: NaN}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -12059,12 +12059,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dea4cbc01aac584dbd2a16e08d36936, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rightWall: {fileID: 1795959377}
-  leftWall: {fileID: 1487372476}
-  rightWallx2: {fileID: 5469379307506370348}
-  leftWallx2: {fileID: 172588772357151060}
-  rightWallx3: {fileID: 8019457039676558860}
-  leftWallx3: {fileID: 8041619057750049184}
 --- !u!114 &1503068866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17696,6 +17690,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1866681844052301359, guid: aef0ead3857a9a2478e1c23b882fc106,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.011
+      objectReference: {fileID: 0}
     - target: {fileID: 3864184532817439029, guid: aef0ead3857a9a2478e1c23b882fc106,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -17852,6 +17851,11 @@ PrefabInstance:
       propertyPath: m_Size.z
       value: 0.012
       objectReference: {fileID: 0}
+    - target: {fileID: 5805687739265227061, guid: 8fde49f77f15a4044b4d04ff467cfc4d,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.011
+      objectReference: {fileID: 0}
     - target: {fileID: 6392675418028100188, guid: 8fde49f77f15a4044b4d04ff467cfc4d,
         type: 3}
       propertyPath: m_IsActive
@@ -17946,6 +17950,11 @@ PrefabInstance:
       propertyPath: m_Size.z
       value: 0.012
       objectReference: {fileID: 0}
+    - target: {fileID: 8148936141634894016, guid: 8de243798f1b0b74bb74140f24ea99ec,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.011
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8de243798f1b0b74bb74140f24ea99ec, type: 3}
 --- !u!1001 &5469379307506370346
@@ -17969,6 +17978,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6267008328983825340, guid: e8a33a7cc31ee6f428d284a908b452a1,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.011
       objectReference: {fileID: 0}
     - target: {fileID: 7323424884253967372, guid: e8a33a7cc31ee6f428d284a908b452a1,
         type: 3}
@@ -18136,6 +18150,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6169584861735187010, guid: 95859638776e520408752f81f1bea675,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.011
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 95859638776e520408752f81f1bea675, type: 3}
 --- !u!4 &8019457039676558859 stripped
@@ -18226,6 +18245,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6739202404361398512, guid: 1f126610081a4564bb1aab1fb7ac2962,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 0.011
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f126610081a4564bb1aab1fb7ac2962, type: 3}
@@ -18318,6 +18342,11 @@ PrefabInstance:
       propertyPath: camera
       value: 
       objectReference: {fileID: 963194227}
+    - target: {fileID: 8976357030853431975, guid: fa1e3e1f870fc4746a831aacb0a6682a,
+        type: 3}
+      propertyPath: marker
+      value: 
+      objectReference: {fileID: 1503068860}
     - target: {fileID: 8976357030853431994, guid: fa1e3e1f870fc4746a831aacb0a6682a,
         type: 3}
       propertyPath: m_Name
