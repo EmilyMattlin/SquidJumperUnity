@@ -18,7 +18,6 @@ public class WallBehavior : MonoBehaviour
     void Start()
     {
         Color thisColor = (Color)Random.Range(0, System.Enum.GetValues(typeof(Color)).Length);
-        UnityEngine.Debug.Log(thisColor);
 
         if (thisColor == Color.Pink)
         {

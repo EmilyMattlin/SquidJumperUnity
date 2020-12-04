@@ -8,19 +8,18 @@ public class SquidMovement : MonoBehaviour
 {
     private enum PlayerStatus { Right, Left, Moving };
     private PlayerStatus squidStatus;
-    [SerializeField]
-    public float left = -5f;
-    [SerializeField]
-    public float right = 5f;
+    private const float LEFT = -7f;
+    private const float RIGHT = 7f;
     public Rigidbody rb;
     public GameObject floor;
     private bool touchingWall;
     public Camera camera;
-
+    private bool loss;
     IEnumerator Start()
     {
         yield return new WaitForSeconds(5f);
         floor.SetActive(false);
+        loss = false;
         rb = gameObject.GetComponent<Rigidbody>();
         squidStatus = PlayerStatus.Right;
         touchingWall = true;
@@ -33,6 +32,7 @@ public class SquidMovement : MonoBehaviour
 
     void Update()
     {
+
         if (touchingWall)
         {
             rb.constraints = RigidbodyConstraints.FreezePositionY;
@@ -41,7 +41,7 @@ public class SquidMovement : MonoBehaviour
         {
             rb.constraints = RigidbodyConstraints.None;
         }
-        if (Time.time < 5f)
+        if (Time.time < 5f || loss)
         {
             return;
         }
@@ -72,9 +72,10 @@ public class SquidMovement : MonoBehaviour
             //Vector3 destination = new Vector3(right, transform.position.y, transform.position.z + 1f);
             //StartCoroutine(Jump(1f, transform.position, destination, PlayerStatus.Right));
         }
-        if (transform.position.z < camera.transform.position.z || transform.position.x > right || transform.position.x < left || transform.position.y < 0f)
+        if (transform.position.x > RIGHT || transform.position.z < camera.transform.position.z || transform.position.x < LEFT || transform.position.y < 1f)
         {
-            UnityEngine.Debug.Log("YOU LOSE");
+            loss = true;
+            camera.GetComponent<CameraMovement>().onLoss();
         }
     }
     /*
