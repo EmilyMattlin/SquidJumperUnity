@@ -23,6 +23,7 @@ public class BeatEffects : MonoBehaviour
 		AudioProcessor processor = FindObjectOfType<AudioProcessor>();
 		processor.onBeat.AddListener(onOnbeatDetected);
 		processor.onSpectrum.AddListener(onSpectrum);
+		leftSide = false;
 	}
 
 	void Update()
@@ -35,10 +36,18 @@ public class BeatEffects : MonoBehaviour
 	//to adjust the sensitivity
 	void onOnbeatDetected()
 	{
-		/*if((Time.time % 1f) > .5f)
+		//Vector3 newWalllPos = GetComponent<BuildingSpawner>().createBuilding();
+		/*if (transform.position.z > newWallPos.z)
         {
-			return;
-        }*/
+			GameObject newWall = Instantiate(wall, newWalllPos, transform.rotation);
+			newWall.SetActive(true);
+			newWall.AddComponent<WallBehavior>();
+		}*/
+		//if((Time.time % 1f) > .9f)
+        //{
+			GetComponent<BuildingSpawner>().createBuilding();
+		//}
+	/*
 		size = (WallSize)Random.Range(0, System.Enum.GetValues(typeof(WallSize)).Length); 
 		leftSide = !leftSide;
 		if (leftSide)//(side == WallSide.Left)
@@ -74,7 +83,7 @@ public class BeatEffects : MonoBehaviour
 				default:
 					break;
 			}
-		}
+		}*/
 	}
 
 	//This event will be called every frame while music is playing
