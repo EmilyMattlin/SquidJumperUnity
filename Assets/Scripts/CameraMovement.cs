@@ -6,6 +6,7 @@ public class CameraMovement : MonoBehaviour
 {
     public Transform squid;
     private bool loss;
+    public GameObject canvas;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,7 +14,7 @@ public class CameraMovement : MonoBehaviour
     }
     protected void LateUpdate()
     {
-        if (Time.time < 5f)
+        if (Time.timeSinceLevelLoad < 5f)
         {
             return;
         }
@@ -24,6 +25,7 @@ public class CameraMovement : MonoBehaviour
         else
         {
             transform.LookAt(squid);
+            canvas.SetActive(true);
         }
     }
     // Update is called once per frame

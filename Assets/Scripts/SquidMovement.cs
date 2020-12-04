@@ -15,6 +15,7 @@ public class SquidMovement : MonoBehaviour
     private bool touchingWall;
     public Camera camera;
     private bool loss;
+
     IEnumerator Start()
     {
         yield return new WaitForSeconds(5f);
@@ -32,7 +33,6 @@ public class SquidMovement : MonoBehaviour
 
     void Update()
     {
-
         if (touchingWall)
         {
             rb.constraints = RigidbodyConstraints.FreezePositionY;
@@ -41,48 +41,29 @@ public class SquidMovement : MonoBehaviour
         {
             rb.constraints = RigidbodyConstraints.None;
         }
-        if (Time.time < 5f || loss)
+        if (Time.timeSinceLevelLoad < 5f || loss)
         {
             return;
         }
-        transform.position += new Vector3(0f, 0f, 0.1f);
 
+        transform.position += new Vector3(0f, 0f, 0.1f);
         //Move left
         if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) && (squidStatus == PlayerStatus.Right))
         {
-            rb.AddForce(-20f, 0, 0, ForceMode.Impulse);
-            if (transform.position.y < 10)
-            {
-                transform.position += new Vector3(0f, 0.75f, 0f);
-            }
-            squidStatus = PlayerStatus.Moving;
-            //Vector3 destination = new Vector3(left, transform.position.y, transform.position.z + 1f);
-            //StartCoroutine(Jump(1f, transform.position, destination, PlayerStatus.Left));
+            Jump(-20f);
         }
-
         //Move right
         if ((Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) && (squidStatus == PlayerStatus.Left))
         {
-            rb.AddForce(20f, 0, 0, ForceMode.Impulse);
-            if (transform.position.y < 10)
-            {
-                transform.position += new Vector3(0f, 0.75f, 0f);
-            }
-            squidStatus = PlayerStatus.Moving;
-            //Vector3 destination = new Vector3(right, transform.position.y, transform.position.z + 1f);
-            //StartCoroutine(Jump(1f, transform.position, destination, PlayerStatus.Right));
+            Jump(20f);
         }
+
         if (transform.position.x > RIGHT || transform.position.z < camera.transform.position.z || transform.position.x < LEFT || transform.position.y < 1f)
         {
             loss = true;
             camera.GetComponent<CameraMovement>().onLoss();
         }
     }
-    /*
-    private void OnTriggerEnter(Collider other)
-    {
-        rb.constraints = RigidbodyConstraints.FreezePositionY;
-    }*/
 
     void OnCollisionEnter(Collision collision)
     {
@@ -102,22 +83,20 @@ public class SquidMovement : MonoBehaviour
     {
         touchingWall = false;
     }
-    /*
-    IEnumerator Jump(float waitTime, Vector3 start, Vector3 dest, PlayerStatus afterStatus)
+
+    void Jump(float sideDist)
     {
-        squidStatus = PlayerStatus.Moving;
-        float i = 0f;
-        while (i < 1f)
+        rb.AddForce(sideDist, 0, 0, ForceMode.Impulse);
+        transform.position += new Vector3(0,0,0.1f);
+        camera.transform.position += new Vector3(0, 0, 0.1f);
+        if (transform.position.y < 9f)
         {
-            transform.position = Vector3.Lerp(start, dest, i);
-            //if (i < 0.5f)
-            //{
-            //  transform.position = Vector3.Lerp(start, start + new Vector3(0, 2f, 0), i);
-            //}
-            i += 0.2f;
-            yield return null;
+            transform.position += new Vector3(0f, 1f, 0f);
         }
-        squidStatus = afterStatus;
-        yield return 0;
-    }*/
+        if (Mathf.Abs(transform.position.x) - Mathf.Abs(camera.transform.position.x) < 7f)
+        {
+            rb.AddForce(0, 0.5f, 0, ForceMode.Impulse);
+        }
+        squidStatus = PlayerStatus.Moving;
+    }
 }

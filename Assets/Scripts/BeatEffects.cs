@@ -35,26 +35,24 @@ public class BeatEffects : MonoBehaviour
 	//to adjust the sensitivity
 	void onOnbeatDetected()
 	{
-		if((Time.time % 1f) > .5f)
+		/*if((Time.time % 1f) > .5f)
         {
 			return;
-        }
-		//var values = WallSide.GetValues(typeof(WallSide));
+        }*/
 		size = (WallSize)Random.Range(0, System.Enum.GetValues(typeof(WallSize)).Length); 
 		leftSide = !leftSide;
-		GameObject newWall;
 		if (leftSide)//(side == WallSide.Left)
 		{
 			switch (size)
 			{
 				case WallSize.Small:
-					 createBuilding(leftWall);
+					 createBuilding(leftWall, 4f);
 					break;
 				case WallSize.Medium:
-					createBuilding(leftWallx2);
+					createBuilding(leftWallx2, 8f);
 					break;
 				case WallSize.Large:
-					createBuilding(leftWallx3);
+					createBuilding(leftWallx3, 12f);
 					break;
 				default:
 					break;
@@ -65,13 +63,13 @@ public class BeatEffects : MonoBehaviour
 			switch (size)
 			{
 				case WallSize.Small:
-					createBuilding(rightWall);
+					createBuilding(rightWall, 4f);
 					break;
 				case WallSize.Medium:
-					createBuilding(rightWallx2);
+					createBuilding(rightWallx2, 8f);
 					break;
 				case WallSize.Large:
-					createBuilding(rightWallx3);
+					createBuilding(rightWallx3, 12f);
 					break;
 				default:
 					break;
@@ -93,14 +91,16 @@ public class BeatEffects : MonoBehaviour
 		}
 	}
 
-	private void createBuilding(GameObject wallObject)
+	private void createBuilding(GameObject wallObject, float halfWidth)
     {
 		float yPos = leftWall.transform.position.y + Random.Range(-6f, 6f);
-		Vector3 newWalllPos = new Vector3(wallObject.transform.position.x, yPos, transform.position.z + 4f);
-		Collider[] hitColliders = Physics.OverlapSphere(newWalllPos, 4f); // 4 is z axis radius of buildin
-		
-		GameObject newWall = Instantiate(wallObject, newWalllPos, transform.rotation);
-		newWall.SetActive(true);
-		newWall.AddComponent<WallBehavior>();
+		Vector3 newWalllPos = new Vector3(wallObject.transform.position.x, yPos, transform.position.z + halfWidth);
+		Collider[] hitColliders = Physics.OverlapSphere(newWalllPos, halfWidth-1f); // 4 is z axis radius of buildin
+		if (hitColliders.Length == 0)
+		{
+			GameObject newWall = Instantiate(wallObject, newWalllPos, transform.rotation);
+			newWall.SetActive(true);
+			newWall.AddComponent<WallBehavior>();
+		}
 	}
 }
