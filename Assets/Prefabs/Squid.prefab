@@ -109,11 +109,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e1fffd890c9a3b44865a6651a3d9bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  left: -2.44
-  right: 2.44
   rb: {fileID: 8976357030853431972}
   floor: {fileID: 0}
   camera: {fileID: 0}
+  marker: {fileID: 0}
 --- !u!54 &8976357030853431972
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -128,7 +127,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!111 &8976357030853431973
 Animation:
