@@ -32,6 +32,10 @@ public class BeatEffects : MonoBehaviour
 
 	void Update()
     {
+		if (SquidMovement.paused)
+		{
+			return;
+		}
 		if (!loss)
 		{
 			transform.position += new Vector3(0f, 0f, 0.15f);
@@ -48,6 +52,10 @@ public class BeatEffects : MonoBehaviour
 	//to adjust the sensitivity
 	void onOnbeatDetected()
 	{
+		if (SquidMovement.paused)
+		{
+			return;
+		}
 		//Vector3 newWalllPos = GetComponent<BuildingSpawner>().createBuilding();
 		if (transform.position.z >= wallPos.z)
         {

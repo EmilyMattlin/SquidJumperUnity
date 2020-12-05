@@ -14,6 +14,10 @@ public class CameraMovement : MonoBehaviour
     }
     protected void LateUpdate()
     {
+        if (SquidMovement.paused)
+        {
+            return;
+        }
         if (Time.timeSinceLevelLoad < 5f)
         {
             return;
@@ -26,6 +30,10 @@ public class CameraMovement : MonoBehaviour
         {
             transform.LookAt(squid);
             canvas.SetActive(true);
+        }
+        if(transform.position.z - squid.position.z > 8f)
+        {
+            transform.position += new Vector3(0f, 0f, squid.position.z - 7f);
         }
     }
     // Update is called once per frame

@@ -11,22 +11,23 @@ public class SquidMovement : MonoBehaviour
     private const float LEFT = -7f;
     private const float RIGHT = 7f;
     public Rigidbody rb;
-    public GameObject floor;
     private bool touchingWall;
     public Camera camera;
     public GameObject marker;
     private bool loss;
     private bool jumped;
+    public static bool paused;
 
     IEnumerator Start()
     {
         yield return new WaitForSeconds(5f);
-        floor.SetActive(false);
-        loss = false;
         rb = gameObject.GetComponent<Rigidbody>();
+        rb.useGravity = true;
         squidStatus = PlayerStatus.Right;
         touchingWall = true;
+        loss = false;
         jumped = false;
+        paused = false;
     }
 
     protected void LateUpdate()
@@ -36,6 +37,22 @@ public class SquidMovement : MonoBehaviour
 
     void Update()
     {
+        if(paused && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)))
+        {
+            paused = false;
+        }
+        else if (Time.timeSinceLevelLoad < 5f || loss || paused)
+        {
+            return;
+        }
+        else if (transform.position.z > 15f && !jumped)
+        {
+            Collider[] hitColliders = Physics.OverlapSphere(new Vector3(transform.position.x - 8f, transform.position.y, transform.position.z), 4f); // 4 is z axis radius of building
+            if (hitColliders.Length > 0)
+            {
+                Pause();
+            }
+        }
         if (touchingWall)
         {
             rb.constraints = RigidbodyConstraints.FreezePositionY;
@@ -44,15 +61,6 @@ public class SquidMovement : MonoBehaviour
         {
             rb.constraints = RigidbodyConstraints.None;
         }
-        if (Time.timeSinceLevelLoad < 5f || loss)
-        {
-            return;
-        }
-        else if (transform.position.z > 25f && !jumped)
-        {
-            onLoss();
-        }
-
         transform.position += new Vector3(0f, 0f, 0.15f);
 
         //Move left
@@ -70,6 +78,12 @@ public class SquidMovement : MonoBehaviour
         {
             onLoss();
         }
+    }
+
+    void Pause()
+    {
+        UnityEngine.Debug.Log("Jump to the left!");
+        paused = true;
     }
 
     void onLoss()
