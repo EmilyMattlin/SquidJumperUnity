@@ -32,26 +32,9 @@ public class SquidMovement : MonoBehaviour
 
     protected void LateUpdate()
     {
-        transform.localEulerAngles = new Vector3(0, 90, 0);
-    }
-
-    void Update()
-    {
-        if(paused && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)))
-        {
-            paused = false;
-        }
-        else if (Time.timeSinceLevelLoad < 5f || loss || paused)
+        if (Time.timeSinceLevelLoad < 5f || loss || paused)
         {
             return;
-        }
-        else if (transform.position.z > 15f && !jumped)
-        {
-            Collider[] hitColliders = Physics.OverlapSphere(new Vector3(transform.position.x - 8f, transform.position.y, transform.position.z), 4f); // 4 is z axis radius of building
-            if (hitColliders.Length > 0)
-            {
-                Pause();
-            }
         }
         if (touchingWall)
         {
@@ -77,6 +60,28 @@ public class SquidMovement : MonoBehaviour
         if (transform.position.x > RIGHT || transform.position.z < camera.transform.position.z || transform.position.x < LEFT || transform.position.y < 1f)
         {
             onLoss();
+        }
+
+        transform.localEulerAngles = new Vector3(0, 90, 0);
+    }
+
+    void Update()
+    {
+        if(paused && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)))
+        {
+            paused = false;
+        }
+        else if (Time.timeSinceLevelLoad < 5f || loss || paused)
+        {
+            return;
+        }
+        else if (transform.position.z > 15f && !jumped)
+        {
+            Collider[] hitColliders = Physics.OverlapSphere(new Vector3(transform.position.x - 8f, transform.position.y, transform.position.z), 4f); // 4 is z axis radius of building
+            if (hitColliders.Length > 0)
+            {
+                Pause();
+            }
         }
     }
 

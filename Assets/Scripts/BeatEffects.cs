@@ -30,7 +30,7 @@ public class BeatEffects : MonoBehaviour
 		wallPos = transform.position;
 	}
 
-	void Update()
+	void LateUpdate()
     {
 		if (SquidMovement.paused)
 		{
