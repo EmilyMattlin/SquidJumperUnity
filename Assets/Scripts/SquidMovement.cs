@@ -48,7 +48,7 @@ public class SquidMovement : MonoBehaviour
         {
             return;
         }
-        else if (transform.position.z > 22f && !jumped)
+        else if (transform.position.z > 25f && !jumped)
         {
             onLoss();
         }
