@@ -170,7 +170,7 @@ public class SquidMovement : MonoBehaviour
         {
             transform.position += new Vector3(0f, 0f, 0.75f);
         }
-        if (transform.position.y < 7.5f)
+        if (transform.position.y < 8f)
         {
             transform.position += new Vector3(0f, 0.75f, 0f);
         }

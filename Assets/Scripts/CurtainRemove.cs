@@ -13,8 +13,8 @@ public class CurtainRemove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position -= new Vector3(0f, 2.5f, 0f);
-        if (transform.position.y < -475)
+        transform.position -= new Vector3(0f, 3f, 0f);
+        if (Time.timeSinceLevelLoad > 5f)
         {
             Destroy(this.gameObject);
         }
