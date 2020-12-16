@@ -7,6 +7,7 @@ public class ChangeText : MonoBehaviour
 {
     private float countdownTime;
     public Text countdown;
+    public GameObject pausedText;
 
     // Start is called before the first frame update
     void Start()
@@ -35,5 +36,17 @@ public class ChangeText : MonoBehaviour
     {
         countdown.text = "" + num;
         countdownTime -= 1f;
+    }
+
+    public void pauseText(bool textState)
+    {
+        if (textState)
+        {
+            pausedText.SetActive(textState);
+        }
+        else
+        {
+            Destroy(pausedText);
+        }
     }
 }

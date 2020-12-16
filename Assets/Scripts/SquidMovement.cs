@@ -20,6 +20,7 @@ public class SquidMovement : MonoBehaviour
     public ParticleSystem rightBurst;
     public ParticleSystem leftBurst;
     public GameObject rotator;
+    public Canvas canvas;
     
     IEnumerator Start()
     {
@@ -87,6 +88,7 @@ public class SquidMovement : MonoBehaviour
         if(paused && (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)))
         {
             paused = false;
+            canvas.GetComponent<ChangeText>().pauseText(false);
         }
         else if (Time.timeSinceLevelLoad < 5f || loss || paused)
         {
@@ -104,7 +106,7 @@ public class SquidMovement : MonoBehaviour
 
     void Pause()
     {
-        UnityEngine.Debug.Log("Jump to the left!");
+        canvas.GetComponent<ChangeText>().pauseText(true);
         paused = true;
     }
 
