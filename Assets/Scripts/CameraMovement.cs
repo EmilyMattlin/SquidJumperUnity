@@ -6,7 +6,7 @@ public class CameraMovement : MonoBehaviour
 {
     public Transform squid;
     private bool loss;
-    public GameObject canvas;
+    public GameObject LoseUI;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,7 +29,7 @@ public class CameraMovement : MonoBehaviour
         else
         {
             transform.LookAt(squid);
-            canvas.SetActive(true);
+            LoseUI.SetActive(true);
         }
         if(transform.position.z - squid.position.z > 8f)
         {

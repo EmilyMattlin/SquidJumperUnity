@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 8976357030853431995}
   - component: {fileID: 8976357030853431975}
   - component: {fileID: 8976357030853431972}
-  - component: {fileID: 8976357030853431973}
   m_Layer: 0
   m_Name: Squid
   m_TagString: Untagged
@@ -110,9 +109,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 8976357030853431972}
-  floor: {fileID: 0}
   camera: {fileID: 0}
   marker: {fileID: 0}
+  rightBurst: {fileID: 0}
+  leftBurst: {fileID: 0}
 --- !u!54 &8976357030853431972
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -129,22 +129,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!111 &8976357030853431973
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8976357030853431994}
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Animation: {fileID: 7552111792714088791, guid: 3c262dd3b05e1aa4293fb78a8fbab7df,
-    type: 3}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!1001 &8976357031940351024
 PrefabInstance:
   m_ObjectHideFlags: 0

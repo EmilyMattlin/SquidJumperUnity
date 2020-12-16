@@ -10,6 +10,8 @@ public class BuildingSpawner : MonoBehaviour
     public GameObject[] rightWalls;
     private bool leftSide;
     private const float BuildingY = 8.8f;
+    private bool loss;
+    private Vector3 wallPos;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +19,8 @@ public class BuildingSpawner : MonoBehaviour
         locationLast = leftWalls[0].transform.position;
         halfWidthLast = 4f;
         leftSide = false;
+        loss = false;
+        wallPos = transform.position;
     }
 
     // Update is called once per frame
@@ -26,6 +30,27 @@ public class BuildingSpawner : MonoBehaviour
         {
             createBuilding();
         }*/
+    }
+
+    void LateUpdate()
+    {
+        if (SquidMovement.paused)
+        {
+            return;
+        }
+        if (!loss)
+        {
+            transform.position += new Vector3(0f, 0f, 0.15f);
+            if (transform.position.z >= wallPos.z)
+            {
+                wallPos = GetComponent<BuildingSpawner>().createBuilding();
+            }
+        }
+    }
+
+    public void onLoss()
+    {
+        loss = true;
     }
 
     public Vector3 createBuilding()
