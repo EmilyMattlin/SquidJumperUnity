@@ -13,14 +13,17 @@ public class SquidMovement : MonoBehaviour
     private bool touchingWall;
     private bool loss;
     private bool jumped;
-    public Camera camera;
+    private AudioSource audioS;
+    public Camera cam;
     public GameObject marker;
     public Rigidbody rb;
     public static bool paused;
     public ParticleSystem rightBurst;
     public ParticleSystem leftBurst;
-    public GameObject rotator;
     public Canvas canvas;
+    public AudioClip jumpNoise;
+    public AudioClip splatNoise;
+    public AudioClip dropNoise;
     
     IEnumerator Start()
     {
@@ -33,6 +36,15 @@ public class SquidMovement : MonoBehaviour
         loss = false;
         jumped = false;
         paused = false;
+        audioS = GetComponent<AudioSource>();
+    }
+
+    void FixedUpdate()
+    {
+        if (Time.timeSinceLevelLoad > 5f && !loss && !paused)
+        {
+            transform.position += new Vector3(0f, 0f, 0.3f);
+        }
     }
 
     protected void LateUpdate()
@@ -48,10 +60,10 @@ public class SquidMovement : MonoBehaviour
         else
         {
             rb.constraints = RigidbodyConstraints.None;
-            rb.constraints = RigidbodyConstraints.FreezeRotation;
+            rb.constraints = RigidbodyConstraints.FreezeRotationY;
+            rb.constraints = RigidbodyConstraints.FreezeRotationZ;
         }
 
-        transform.position += new Vector3(0f, 0f, 0.15f);
 
         //Move left
         if ((Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) && (squidStatus == PlayerStatus.Right))
@@ -68,19 +80,22 @@ public class SquidMovement : MonoBehaviour
 
         if(squidStatus == PlayerStatus.MovingLeft)
         {
+            //transform.Rotate(1f,0,0);
            // Vector3 relativePosition = new Vector3(-10f, transform.position.y, transform.position.z);
             //SM_Squid.transform.rotation = Quaternion.LookRotation(relativePosition);
         }
         else if (squidStatus == PlayerStatus.MovingLeft)
         {
+            //transform.Rotate(-1f, 0, 0);
             //Vector3 relativePosition = new Vector3(10f, transform.position.y, transform.position.z);
-           // SM_Squid.transform.rotation = Quaternion.LookRotation(relativePosition);
+            // SM_Squid.transform.rotation = Quaternion.LookRotation(relativePosition);
         }
 
-        if (transform.position.x > RIGHT || transform.position.z < camera.transform.position.z || transform.position.x < LEFT || transform.position.y < 2.5f)
+        if (transform.position.x > RIGHT || transform.position.z < cam.transform.position.z || transform.position.x < LEFT || transform.position.y < 2.5f)
         {
             onLoss();
         }
+        canvas.GetComponent<ChangeText>().updateScore((int) transform.position.z);
     }
 
     void Update()
@@ -114,22 +129,27 @@ public class SquidMovement : MonoBehaviour
     {
         loss = true;
         rb.constraints = RigidbodyConstraints.None;
-        camera.GetComponent<CameraMovement>().onLoss();
+        audioS.clip = dropNoise;
+        audioS.Play();
+        cam.GetComponent<CameraMovement>().onLoss();
         marker.GetComponent<BuildingSpawner>().onLoss();
     }
 
     void OnCollisionEnter(Collision collision)
     {
         touchingWall = true;
-
+        audioS.clip = splatNoise;
+        audioS.Play();
         if (collision.gameObject.tag == "Left Wall")
         {
             squidStatus = PlayerStatus.Left;
+            //transform.eulerAngles = new Vector3(90f, 90f, 0);
             leftBurst.Play(true);
         }
         if (collision.gameObject.tag == "Right Wall")
         {
             squidStatus = PlayerStatus.Right;
+            //transform.eulerAngles = new Vector3(0f, 90f, 0);
             rightBurst.Play(true);
         }
     }
@@ -141,10 +161,12 @@ public class SquidMovement : MonoBehaviour
 
     void Jump(float sideDist)
     {
+        audioS.clip = jumpNoise;
+        audioS.Play();
         rb.AddForce(sideDist, 0, 0, ForceMode.Impulse);
-        transform.position += new Vector3(0,0,0.1f);
-        camera.transform.position += new Vector3(0, 0, 0.1f);
-        if (transform.position.z - camera.transform.position.z < 5f)
+        transform.position += new Vector3(0,0,0.2f);
+        cam.transform.position += new Vector3(0, 0, 0.2f);
+        if (transform.position.z - cam.transform.position.z < 5f)
         {
             transform.position += new Vector3(0f, 0f, 0.75f);
         }
@@ -152,7 +174,7 @@ public class SquidMovement : MonoBehaviour
         {
             transform.position += new Vector3(0f, 0.75f, 0f);
         }
-        if (Mathf.Abs(transform.position.x) - Mathf.Abs(camera.transform.position.x) < 7f)
+        if (Mathf.Abs(transform.position.x) - Mathf.Abs(cam.transform.position.x) < 7f)
         {
             rb.AddForce(0, 0.5f, 0, ForceMode.Impulse);
         }

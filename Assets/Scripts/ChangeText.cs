@@ -8,6 +8,7 @@ public class ChangeText : MonoBehaviour
     private float countdownTime;
     public Text countdown;
     public GameObject pausedText;
+    public Text score;
 
     // Start is called before the first frame update
     void Start()
@@ -48,5 +49,10 @@ public class ChangeText : MonoBehaviour
         {
             Destroy(pausedText);
         }
+    }
+
+    public void updateScore(int newScore)
+    {
+        score.text = "Score: " + newScore;
     }
 }

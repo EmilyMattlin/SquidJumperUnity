@@ -26,12 +26,14 @@ public class BuildingSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*if ((Time.time % 1f) < .1f)
-        {
-            createBuilding();
-        }*/
     }
-
+    void FixedUpdate()
+    {
+        if (!loss)
+        {
+            transform.position += new Vector3(0f, 0f, 0.3f);
+        }
+    }
     void LateUpdate()
     {
         if (SquidMovement.paused)
@@ -40,7 +42,7 @@ public class BuildingSpawner : MonoBehaviour
         }
         if (!loss)
         {
-            transform.position += new Vector3(0f, 0f, 0.15f);
+            //transform.position += new Vector3(0f, 0f, 0.15f);
             if (transform.position.z >= wallPos.z)
             {
                 wallPos = GetComponent<BuildingSpawner>().createBuilding();

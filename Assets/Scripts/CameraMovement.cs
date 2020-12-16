@@ -14,19 +14,15 @@ public class CameraMovement : MonoBehaviour
     }
     protected void LateUpdate()
     {
-        if (SquidMovement.paused)
+        if (SquidMovement.paused || Time.timeSinceLevelLoad < 5f)
         {
             return;
         }
-        if (Time.timeSinceLevelLoad < 5f)
-        {
-            return;
-        }
-        if (!loss)
+        /*if (!loss)
         {
             transform.position += new Vector3(0f, 0f, 0.15f);
-        }
-        else
+        }*/
+        if (loss)
         {
             transform.LookAt(squid);
             LoseUI.SetActive(true);
@@ -41,7 +37,13 @@ public class CameraMovement : MonoBehaviour
     {
         
     }
-
+    void FixedUpdate()
+    {
+        if (!SquidMovement.paused && Time.timeSinceLevelLoad > 5f && !loss)
+        {
+            transform.position += new Vector3(0f, 0f, 0.3f);
+        }
+    }
     public void onLoss()
     {
         loss = true;
